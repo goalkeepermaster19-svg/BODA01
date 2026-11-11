@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8f3ec">
+
+    <meta name="description" content="Una invitación especial para celebrar nuestro amor.">
+
+    <title>Nuestra Boda | GLAM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <!-- SOBRE DE BIENVENIDA -->
+    <div class="sobre-inicial" id="sobreInicial">
+
+        <div class="sobre-decoracion"></div>
+
+        <div class="sobre-contenido">
+            <span class="sobre-etiqueta">UNA INVITACIÓN ESPECIAL</span>
+
+            <div class="sobre-monograma">A <span>&</span> V</div>
+
+            <p class="sobre-frase">Tenemos algo que celebrar...</p>
+
+            <div class="sello">
+                <span>♥</span>
+            </div>
+
+            <button class="boton-abrir" id="botonAbrir">
+                Abrir invitación
+                <span>↗</span>
+            </button>
+
+            <p class="sobre-pie">Con cariño, Alejandro y Valentina</p>
+        </div>
+    </div>
+
+
+    <!-- CONTROLES FLOTANTES -->
+    <div class="controles-flotantes" id="controlesFlotantes">
+
+        <button class="control-flotante" id="botonMusica" aria-label="Reproducir música">
+            ♫
+        </button>
+
+        <button class="control-flotante" id="botonMenu" aria-label="Abrir menú">
+            ☰
+        </button>
+
+    </div>
+
+
+    <!-- MENÚ -->
+    <nav class="menu-lateral" id="menuLateral">
+        <button class="cerrar-menu" id="cerrarMenu">×</button>
+
+        <span class="menu-etiqueta">NUESTRA CELEBRACIÓN</span>
+
+        <a href="#inicio">Inicio</a>
+        <a href="#historia">Nuestra historia</a>
+        <a href="#galeria">Recuerdos</a>
+        <a href="#itinerario">Itinerario</a>
+        <a href="#ubicaciones">Ubicaciones</a>
+        <a href="#regalos">Regalos</a>
+        <a href="#confirmacion">Confirmar asistencia</a>
+    </nav>
+
+    <div class="fondo-menu" id="fondoMenu"></div>
+
+
+    <!-- INVITACIÓN -->
+    <main id="invitacion" class="invitacion oculto">
+
+        <!-- PORTADA -->
+        <section class="portada" id="inicio">
+
+            <div class="portada-imagen"></div>
+            <div class="portada-velo"></div>
+
+            <div class="portada-contenido">
+
+                <span class="texto-superior">EL COMIENZO DE PARA SIEMPRE</span>
+
+                <div class="nombres-portada">
+                    <span id="nombrePortada1">Alejandro</span>
+                    <span class="ampersand">&</span>
+                    <span id="nombrePortada2">Valentina</span>
+                </div>
+
+                <div class="ornamento">
+                    <span></span>
+                    <i>♥</i>
+                    <span></span>
+                </div>
+
+                <p class="portada-mensaje">
+                    Nos encantaría compartir contigo<br>
+                    uno de los días más especiales de nuestras vidas.
+                </p>
+
+                <div class="fecha-portada">
+                    <span id="fechaPortada">20 · NOVIEMBRE · 2027</span>
+                </div>
+
+                <a href="#presentacion" class="flecha-bajar">↓</a>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRESENTACIÓN -->
+        <section class="seccion presentacion" id="presentacion">
+
+            <div class="decoracion-esquina decoracion-izquierda">❧</div>
+            <div class="decoracion-esquina decoracion-derecha">❧</div>
+
+            <span class="etiqueta-seccion">UN DÍA INOLVIDABLE</span>
+
+            <h2 class="titulo-caligrafico">¡Nos casamos!</h2>
+
+            <div class="separador-floral">✧ ❦ ✧</div>
+
+            <p class="texto-presentacion">
+                Después de tantos momentos compartidos, hemos decidido comenzar
+                una nueva aventura juntos. Queremos que seas parte de este
+                capítulo tan especial de nuestras vidas.
+            </p>
+
+            <div class="fecha-detalle">
+                <span class="fecha-dia" id="diaEvento">20</span>
+
+                <div>
+                    <span id="mesEvento">NOVIEMBRE</span>
+                    <span id="anioEvento">2027</span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- CUENTA REGRESIVA -->
+        <section class="cuenta-regresiva">
+
+            <div class="onda-superior">
+                <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                    <path d="M0,60 C300,130 600,0 900,60 C1150,110 1300,20 1440,55 L1440,0 L0,0 Z"></path>
+                </svg>
+            </div>
+
+            <span class="etiqueta-seccion">LA CUENTA REGRESIVA</span>
+
+            <h2 class="titulo-caligrafico">Cada vez falta menos</h2>
+
+            <div class="contador" id="contador">
+
+                <div class="contador-unidad">
+                    <strong id="dias">00</strong>
+                    <span>DÍAS</span>
+                </div>
+
+                <i>:</i>
+
+                <div class="contador-unidad">
+                    <strong id="horas">00</strong>
+                    <span>HORAS</span>
+                </div>
+
+                <i>:</i>
+
+                <div class="contador-unidad">
+                    <strong id="minutos">00</strong>
+                    <span>MINUTOS</span>
+                </div>
+
+                <i>:</i>
+
+                <div class="contador-unidad">
+                    <strong id="segundos">00</strong>
+                    <span>SEGUNDOS</span>
+                </div>
+
+            </div>
+
+            <p class="contador-pie">El amor merece celebrarse.</p>
+
+            <div class="onda-inferior">
+                <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                    <path d="M0,60 C300,0 600,120 900,60 C1150,10 1300,100 1440,55 L1440,120 L0,120 Z"></path>
+                </svg>
+            </div>
+
+        </section>
+
+
+        <!-- HISTORIA -->
+        <section class="seccion historia" id="historia">
+
+            <div class="historia-imagen">
+                <img src="recursos/historia.jpg" alt="Nuestra historia">
+                <span class="marco-foto"></span>
+            </div>
+
+            <div class="historia-texto">
+
+                <span class="etiqueta-seccion">UN CAMINO JUNTOS</span>
+
+                <h2 class="titulo-caligrafico">Nuestra historia</h2>
+
+                <div class="separador-floral">✧ ❦ ✧</div>
+
+                <p id="textoHistoria">
+                    Hay encuentros que cambian nuestra vida para siempre.
+                    Lo que comenzó como una casualidad se convirtió en una
+                    historia llena de momentos, sueños y amor.
+                </p>
+
+                <p class="firma-historia" id="firmaHistoria">
+                    Alejandro & Valentina
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- GALERÍA -->
+        <section class="seccion galeria" id="galeria">
+
+            <span class="etiqueta-seccion">NUESTROS MOMENTOS</span>
+
+            <h2 class="titulo-caligrafico">Pequeños recuerdos</h2>
+
+            <p class="texto-intro">
+                Cada fotografía guarda un pedacito de nuestra historia.
+            </p>
+
+            <div class="galeria-grid">
+
+                <button class="foto-galeria foto-grande" data-imagen="recursos/foto1.jpg">
+                    <img src="recursos/foto1.jpg" alt="Recuerdo 1">
+                </button>
+
+                <button class="foto-galeria foto-alta" data-imagen="recursos/foto2.jpg">
+                    <img src="recursos/foto2.jpg" alt="Recuerdo 2">
+                </button>
+
+                <button class="foto-galeria foto-ancha" data-imagen="recursos/foto3.jpg">
+                    <img src="recursos/foto3.jpg" alt="Recuerdo 3">
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- VIDEO -->
+        <section class="seccion video-seccion" id="videoSeccion">
+
+            <span class="etiqueta-seccion">UN RECUERDO ESPECIAL</span>
+
+            <h2 class="titulo-caligrafico">Un poquito de nosotros</h2>
+
+            <div class="video-contenedor" id="videoContenedor">
+                <div class="video-placeholder">
+                    <span>♥</span>
+                    <p>Una historia que merece ser recordada</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ITINERARIO -->
+        <section class="seccion itinerario" id="itinerario">
+
+            <span class="etiqueta-seccion">ACOMPÁÑANOS</span>
+
+            <h2 class="titulo-caligrafico">Un día para recordar</h2>
+
+            <p class="texto-intro">
+                Estos son los momentos que hemos preparado para compartir contigo.
+            </p>
+
+            <div class="itinerario-lista" id="listaItinerario"></div>
+
+        </section>
+
+
+        <!-- UBICACIONES -->
+        <section class="seccion ubicaciones" id="ubicaciones">
+
+            <span class="etiqueta-seccion">NOS ENCONTRAMOS AQUÍ</span>
+
+            <h2 class="titulo-caligrafico">¿Dónde será?</h2>
+
+            <div class="ubicaciones-grid">
+
+                <article class="ubicacion-tarjeta">
+                    <span class="icono-ubicacion">♧</span>
+
+                    <h3>Ceremonia</h3>
+
+                    <p id="nombreCeremonia">Lugar de ceremonia</p>
+                    <span id="direccionCeremonia"></span>
+
+                    <a id="mapaCeremonia" href="#" target="_blank" class="boton-secundario">
+                        Ver ubicación
+                    </a>
+                </article>
+
+                <article class="ubicacion-tarjeta">
+                    <span class="icono-ubicacion">✧</span>
+
+                    <h3>Recepción</h3>
+
+                    <p id="nombreRecepcion">Lugar de recepción</p>
+                    <span id="direccionRecepcion"></span>
+
+                    <a id="mapaRecepcion" href="#" target="_blank" class="boton-secundario">
+                        Ver ubicación
+                    </a>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- VESTIMENTA -->
+        <section class="seccion vestimenta">
+
+            <span class="etiqueta-seccion">UN DETALLE IMPORTANTE</span>
+
+            <h2 class="titulo-caligrafico">Código de vestimenta</h2>
+
+            <div class="vestimenta-icono">♧</div>
+
+            <h3 id="vestimentaTitulo">Elegante</h3>
+
+            <p id="vestimentaTexto">
+                Nos encantará verte lucir tu mejor estilo para esta ocasión.
+            </p>
+
+            <div class="paleta-colores" id="paletaColores"></div>
+
+        </section>
+
+
+        <!-- REGALOS -->
+        <section class="seccion regalos" id="regalos">
+
+            <span class="etiqueta-seccion">TU PRESENCIA ES NUESTRO MEJOR REGALO</span>
+
+            <h2 class="titulo-caligrafico">Un detalle para nosotros</h2>
+
+            <p class="texto-intro" id="textoRegalos">
+                Si deseas hacernos un presente, aquí encontrarás algunas sugerencias.
+            </p>
+
+            <div class="regalos-lista" id="listaRegalos"></div>
+
+        </section>
+
+
+        <!-- CONFIRMACIÓN -->
+        <section class="seccion confirmacion" id="confirmacion">
+
+            <div class="confirmacion-decoracion">❦</div>
+
+            <span class="etiqueta-seccion">QUEREMOS CONTAR CONTIGO</span>
+
+            <h2 class="titulo-caligrafico">¿Nos acompañas?</h2>
+
+            <p class="texto-intro">
+                Tu presencia hará que este día sea aún más especial.
+                Por favor, confirma tu asistencia.
+            </p>
+
+            <form id="formularioRSVP">
+
+                <label for="nombreInvitado">Nombre completo</label>
+                <input type="text" id="nombreInvitado" required placeholder="Escribe tu nombre">
+
+                <label for="asistencia">¿Podrás acompañarnos?</label>
+                <select id="asistencia" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Sí asistiré">¡Sí, ahí estaré!</option>
+                    <option value="No podré asistir">Lo siento, no podré asistir</option>
+                </select>
+
+                <label for="cantidadAcompanantes">Número de acompañantes</label>
+                <select id="cantidadAcompanantes">
+                    <option value="0">Solo yo</option>
+                    <option value="1">1 acompañante</option>
+                    <option value="2">2 acompañantes</option>
+                    <option value="3">3 acompañantes</option>
+                </select>
+
+                <label for="mensajeInvitado">Un mensaje para los novios (opcional)</label>
+                <textarea id="mensajeInvitado" rows="3" placeholder="Escribe unas palabras..."></textarea>
+
+                <button type="submit" class="boton-principal">
+                    Confirmar asistencia
+                    <span>♥</span>
+                </button>
+
+                <p id="mensajeRSVP" class="mensaje-rsvp"></p>
+
+            </form>
+
+        </section>
+
+
+        <!-- PASE DIGITAL -->
+        <section class="seccion pase-digital" id="paseDigital">
+
+            <span class="etiqueta-seccion">TU INVITACIÓN PERSONAL</span>
+
+            <h2 class="titulo-caligrafico">Pase digital</h2>
+
+            <p class="texto-intro">
+                Presenta este código al llegar a nuestra celebración.
+            </p>
+
+            <div class="pase-tarjeta">
+
+                <div class="pase-corazon">♥</div>
+
+                <h3 id="paseNombres">Alejandro & Valentina</h3>
+
+                <p id="paseFecha">20 de noviembre de 2027</p>
+
+                <div id="codigoQR" class="codigo-qr"></div>
+
+                <span class="pase-pie">UN DÍA PARA RECORDAR</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ÁLBUM -->
+        <section class="seccion album" id="albumSeccion">
+
+            <span class="etiqueta-seccion">COMPARTE TUS RECUERDOS</span>
+
+            <h2 class="titulo-caligrafico">Nuestro álbum compartido</h2>
+
+            <p class="texto-intro">
+                Nos encantará ver esta celebración a través de tus fotografías.
+            </p>
+
+            <a href="#" id="enlaceAlbum" target="_blank" class="boton-principal">
+                Compartir fotografías
+                <span>↗</span>
+            </a>
+
+        </section>
+
+
+        <!-- DESPEDIDA -->
+        <footer class="pie-pagina">
+
+            <div class="pie-ornamento">❦</div>
+
+            <p>Con todo nuestro amor</p>
+
+            <h2 class="titulo-caligrafico" id="nombresFinales">
+                Alejandro & Valentina
+            </h2>
+
+            <span id="fechaFinal">20 · 11 · 2027</span>
+
+            <div class="pie-marca">
+                Una experiencia creada por
+                <strong>GLAM</strong>
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <!-- VISOR DE FOTOGRAFÍAS -->
+    <div class="visor-fotos" id="visorFotos">
+        <button id="cerrarVisor">×</button>
+        <img id="imagenAmpliada" src="" alt="Fotografía ampliada">
+    </div>
+
+
+    <audio id="musica" loop preload="none">
+        <source src="recursos/musica.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="datos.js"></script>
+    <script src="funciones.js"></script>
+
+</body>
+</html>
