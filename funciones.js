@@ -15,7 +15,101 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarInvitadoGLAM();
 
 });
+/* ==========================================
+   INVITACIÓN PERSONALIZADA GLAM
+========================================== */
 
+window.glamInvitadoActual = null;
+
+function cargarInvitadoGLAM() {
+
+    const parametros = new URLSearchParams(window.location.search);
+    const token = parametros.get("token");
+
+    const mensaje = document.getElementById("mensajeRSVP");
+    const formulario = document.getElementById("formularioRSVP");
+
+    if (!token) {
+        mensaje.textContent = "No se encontró el código de tu invitación.";
+        formulario.style.display = "none";
+        return;
+    }
+
+    if (!DATOS_BODA.rsvpEndpoint) {
+        mensaje.textContent = "No se encuentra configurada la conexión GLAM.";
+        formulario.style.display = "none";
+        return;
+    }
+
+    console.log("TOKEN DETECTADO:", token);
+    console.log("CONSULTANDO INVITADO...");
+
+    window.glamInvitacionCallback = function(respuesta) {
+
+        console.log("RESPUESTA DEL SERVIDOR:", respuesta);
+
+        if (!respuesta || !respuesta.correcto) {
+            mensaje.textContent =
+                respuesta?.mensaje || "No se pudo identificar tu invitación.";
+            formulario.style.display = "none";
+            return;
+        }
+
+        window.glamInvitadoActual = respuesta;
+
+        const invitado = respuesta.invitado;
+
+        document.getElementById("nombreInvitado").textContent =
+            invitado.nombre;
+
+        const pases = Number(invitado.pasesAsignados || 0);
+
+        document.getElementById("pasesAsignados").textContent = pases;
+
+        const selector = document.getElementById("cantidadPases");
+
+        selector.innerHTML = "";
+
+        for (let i = 1; i <= pases; i++) {
+            const opcion = document.createElement("option");
+            opcion.value = i;
+            opcion.textContent = i === 1 ? "1 persona" : i + " personas";
+            selector.appendChild(opcion);
+        }
+
+        if (pases < 1) {
+            mensaje.textContent = "Esta invitación no tiene pases disponibles.";
+            formulario.style.display = "none";
+            return;
+        }
+
+        if (invitado.estadoRSVP === "CONFIRMADO") {
+            mensaje.textContent = "Tu asistencia ya fue registrada.";
+        }
+
+        document.getElementById("acompanantes").value =
+            invitado.acompanantes || "";
+
+        console.log("INVITADO CARGADO:", invitado);
+    };
+
+    const script = document.createElement("script");
+
+    const separador = DATOS_BODA.rsvpEndpoint.includes("?") ? "&" : "?";
+
+    script.src =
+        DATOS_BODA.rsvpEndpoint +
+        separador +
+        "token=" + encodeURIComponent(token) +
+        "&callback=glamInvitacionCallback";
+
+    script.onerror = function() {
+        mensaje.textContent = "No pudimos conectar con GLAM.";
+        console.error("ERROR AL CONECTAR CON APPS SCRIPT");
+    };
+
+    document.body.appendChild(script);
+}
 
 /* CARGAR INFORMACIÓN */
 
