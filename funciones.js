@@ -417,6 +417,8 @@ function cargarInvitadoGLAM() {
 
     const parametros = new URLSearchParams(window.location.search);
     const token = parametros.get("token");
+    console.log("TOKEN DETECTADO:", token);
+console.log("ENDPOINT GLAM:", DATOS_BODA.rsvpEndpoint);
 
     const mensaje = document.getElementById("mensajeRSVP");
     const formulario = document.getElementById("formularioRSVP");
@@ -444,6 +446,7 @@ function cargarInvitadoGLAM() {
     }
 
     window.glamInvitacionCallback = function(respuesta) {
+        console.log("RESPUESTA DEL SERVIDOR:", respuesta);
 
         if (!respuesta || !respuesta.correcto) {
 
