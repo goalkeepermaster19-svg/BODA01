@@ -8,11 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
     configurarVideo();
     configurarAlbum();
     configurarFormulario();
+    configurarCargaFotosGLAM();
     iniciarCuentaRegresiva();
     generarQR();
     configurarAnimaciones();
+    
 
     cargarInvitadoGLAM();
+    
+    
 
 });
 /* ==========================================
@@ -487,17 +491,9 @@ function configurarVideo() {
 function configurarAlbum() {
 
     const seccion = document.getElementById("albumSeccion");
-    const enlace = document.getElementById("enlaceAlbum");
 
-    if (!DATOS_BODA.albumUrl) {
-
-        seccion.classList.add("oculto");
-
-        return;
-
-    }
-
-    enlace.href = DATOS_BODA.albumUrl;
+    // El álbum estará disponible en esta invitación.
+    seccion.classList.remove("oculto");
 
 }
 
@@ -855,6 +851,232 @@ function configurarAnimaciones() {
     elementos.forEach(elemento => {
 
         observador.observe(elemento);
+
+    });
+
+}
+
+// ======================================================
+// GLAM - ÁLBUM COLABORATIVO DE FOTOGRAFÍAS
+// ======================================================
+
+function configurarCargaFotosGLAM() {
+
+    const selector = document.getElementById("seleccionarFotos");
+    const boton = document.getElementById("botonEnviarFotos");
+    const vistaPrevia = document.getElementById("vistaPreviaFotos");
+    const mensaje = document.getElementById("mensajeFotos");
+
+    const token = new URLSearchParams(
+        window.location.search
+    ).get("token");
+
+    const endpoint = DATOS_BODA.rsvpEndpoint;
+
+    let fotografias = [];
+
+    if (!token || !endpoint) {
+
+        mensaje.textContent =
+            "No se pudo identificar tu invitación.";
+
+        selector.disabled = true;
+
+        return;
+    }
+
+    // SELECCIONAR FOTOGRAFÍAS
+
+    selector.addEventListener("change", () => {
+
+        fotografias = Array.from(selector.files || []);
+
+        vistaPrevia.innerHTML = "";
+
+        if (fotografias.length > 5) {
+
+            mensaje.textContent =
+                "Puedes seleccionar hasta 5 fotografías por envío.";
+
+            fotografias = [];
+            selector.value = "";
+            boton.disabled = true;
+
+            return;
+        }
+
+        fotografias.forEach(foto => {
+
+            const imagen = document.createElement("img");
+
+            imagen.src = URL.createObjectURL(foto);
+
+            imagen.style.width = "90px";
+            imagen.style.height = "90px";
+            imagen.style.objectFit = "cover";
+            imagen.style.borderRadius = "10px";
+            imagen.style.margin = "5px";
+
+            vistaPrevia.appendChild(imagen);
+
+        });
+
+        boton.disabled = fotografias.length === 0;
+
+        mensaje.textContent =
+            fotografias.length + " fotografía(s) seleccionada(s).";
+
+    });
+
+    // ENVIAR FOTOGRAFÍAS
+
+    boton.addEventListener("click", async () => {
+
+        if (!fotografias.length) return;
+
+        boton.disabled = true;
+
+        selector.disabled = true;
+
+        mensaje.textContent =
+            "Preparando fotografías...";
+
+        try {
+
+            for (let i = 0; i < fotografias.length; i++) {
+
+                mensaje.textContent =
+                    "Enviando fotografía " +
+                    (i + 1) +
+                    " de " +
+                    fotografias.length +
+                    "...";
+
+                const foto = fotografias[i];
+
+                const imagenReducida = await reducirFotoGLAM(foto);
+
+                const base64 = imagenReducida.split(",")[1];
+
+                const datos = {
+
+                    tipo: "subir_foto",
+
+                    token: token,
+
+                    nombreArchivo: foto.name,
+
+                    tipoMime: "image/jpeg",
+
+                    base64: base64
+
+                };
+
+                await fetch(endpoint, {
+
+                    method: "POST",
+
+                    mode: "no-cors",
+
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
+
+                    body: JSON.stringify(datos)
+
+                });
+
+            }
+
+            mensaje.textContent =
+                "¡Gracias por compartir tus recuerdos! " +
+                "Hemos enviado tus fotografías.";
+
+            fotografias = [];
+
+            selector.value = "";
+
+            vistaPrevia.innerHTML = "";
+
+        } catch (error) {
+
+            console.error(error);
+
+            mensaje.textContent =
+                "No se pudieron enviar las fotografías. Inténtalo nuevamente.";
+
+        }
+
+        selector.disabled = false;
+
+        boton.disabled = true;
+
+    });
+
+}
+
+
+// REDUCIR TAMAÑO DE LAS FOTOGRAFÍAS
+
+function reducirFotoGLAM(archivo) {
+
+    return new Promise((resolve, reject) => {
+
+        const imagen = new Image();
+
+        const lector = new FileReader();
+
+        lector.onload = evento => {
+
+            imagen.onload = () => {
+
+                const maximo = 1600;
+
+                let ancho = imagen.width;
+                let alto = imagen.height;
+
+                if (ancho > alto && ancho > maximo) {
+
+                    alto = Math.round(alto * maximo / ancho);
+                    ancho = maximo;
+
+                } else if (alto > maximo) {
+
+                    ancho = Math.round(ancho * maximo / alto);
+                    alto = maximo;
+
+                }
+
+                const lienzo = document.createElement("canvas");
+
+                lienzo.width = ancho;
+                lienzo.height = alto;
+
+                const contexto = lienzo.getContext("2d");
+
+                contexto.drawImage(
+                    imagen,
+                    0,
+                    0,
+                    ancho,
+                    alto
+                );
+
+                resolve(
+                    lienzo.toDataURL("image/jpeg", 0.75)
+                );
+
+            };
+
+            imagen.onerror = reject;
+
+            imagen.src = evento.target.result;
+
+        };
+
+        lector.onerror = reject;
+
+        lector.readAsDataURL(archivo);
 
     });
 
