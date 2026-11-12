@@ -407,8 +407,166 @@ function configurarAlbum() {
 
 }
 
+/* ==========================================
+   INVITACIÓN PERSONALIZADA GLAM
+========================================== */
 
-/* FORMULARIO RSVP */
+window.glamInvitadoActual = null;
+
+function cargarInvitadoGLAM() {
+
+    const parametros = new URLSearchParams(window.location.search);
+    const token = parametros.get("token");
+
+    const mensaje = document.getElementById("mensajeRSVP");
+    const formulario = document.getElementById("formularioRSVP");
+
+    if (!token) {
+
+        mensaje.textContent =
+            "Esta invitación requiere un enlace personalizado.";
+
+        formulario.style.display = "none";
+
+        return;
+
+    }
+
+    if (!DATOS_BODA.rsvpEndpoint) {
+
+        mensaje.textContent =
+            "No se encuentra configurada la conexión con GLAM.";
+
+        formulario.style.display = "none";
+
+        return;
+
+    }
+
+    window.glamInvitacionCallback = function(respuesta) {
+
+        if (!respuesta || !respuesta.correcto) {
+
+            mensaje.textContent =
+                respuesta?.mensaje || "No se pudo identificar tu invitación.";
+
+            formulario.style.display = "none";
+
+            return;
+
+        }
+
+        window.glamInvitadoActual = respuesta;
+
+        const invitado = respuesta.invitado;
+
+        // Nombre personalizado
+        document.getElementById("nombreInvitado").textContent =
+            invitado.nombre;
+
+        // Pases asignados
+        const pases = Number(invitado.pasesAsignados || 0);
+
+        document.getElementById("pasesAsignados").textContent = pases;
+
+        // Generar opciones según los pases autorizados
+        const selector = document.getElementById("cantidadPases");
+
+        selector.innerHTML = "";
+
+        for (let i = 1; i <= pases; i++) {
+
+            const opcion = document.createElement("option");
+
+            opcion.value = i;
+
+            opcion.textContent =
+                i === 1 ? "1 persona" : `${i} personas`;
+
+            selector.appendChild(opcion);
+
+        }
+
+        // Si no tiene pases disponibles
+        if (pases < 1) {
+
+            mensaje.textContent =
+                "Esta invitación no tiene pases disponibles.";
+
+            formulario.style.display = "none";
+
+            return;
+
+        }
+
+        // Recuperar confirmación anterior
+        if (invitado.estadoRSVP === "CONFIRMADO") {
+
+            mensaje.textContent =
+                "Ya registraste tu asistencia. Puedes actualizar tu respuesta.";
+
+        } else if (invitado.estadoRSVP === "NO ASISTIRÁ") {
+
+            mensaje.textContent =
+                "Anteriormente registraste que no podrás asistir.";
+
+        }
+
+        // Recuperar acompañantes
+        document.getElementById("acompanantes").value =
+            invitado.acompanantes || "";
+
+        configurarCantidadAsistencia();
+
+    };
+
+    const script = document.createElement("script");
+
+    const separador = DATOS_BODA.rsvpEndpoint.includes("?")
+        ? "&"
+        : "?";
+
+    script.src =
+        DATOS_BODA.rsvpEndpoint +
+        separador +
+        "token=" + encodeURIComponent(token) +
+        "&callback=glamInvitacionCallback";
+
+    script.onerror = function() {
+
+        mensaje.textContent =
+            "No pudimos conectar con el sistema de invitaciones GLAM.";
+
+    };
+
+    document.body.appendChild(script);
+
+}
+
+
+/* CONTROL DE CANTIDAD DE ASISTENTES */
+
+function configurarCantidadAsistencia() {
+
+    const asistencia = document.getElementById("asistencia");
+    const datos = document.getElementById("datosAsistencia");
+    const cantidad = document.getElementById("cantidadPases");
+
+    asistencia.addEventListener("change", () => {
+
+        const asistira = asistencia.value === "SI";
+
+        datos.style.display = asistira ? "block" : "none";
+
+        cantidad.required = asistira;
+
+    });
+
+}
+
+/* ==========================================
+   FORMULARIO RSVP CONECTADO A GLAM
+========================================== */
 
 function configurarFormulario() {
 
@@ -421,72 +579,99 @@ function configurarFormulario() {
         const boton = formulario.querySelector("button");
         const mensaje = document.getElementById("mensajeRSVP");
 
-        const datos = {
+        const invitado = window.glamInvitadoActual;
 
-            nombre: document.getElementById("nombreInvitado").value.trim(),
+        const token = new URLSearchParams(
+            window.location.search
+        ).get("token");
 
-            asistencia: document.getElementById("asistencia").value,
+        if (!invitado || !token) {
 
-            acompanantes: document.getElementById("cantidadAcompanantes").value,
+            mensaje.textContent =
+                "No se pudo identificar tu invitación.";
 
-            mensaje: document.getElementById("mensajeInvitado").value.trim(),
-
-            codigo: DATOS_BODA.codigoInvitacion,
-
-            fechaRegistro: new Date().toISOString()
-
-        };
-
-        if (!datos.nombre || !datos.asistencia) {
-
-            mensaje.textContent = "Completa los campos obligatorios.";
             return;
 
         }
 
+        const asistencia =
+            document.getElementById("asistencia").value;
+
+        if (!asistencia) {
+
+            mensaje.textContent =
+                "Selecciona si podrás acompañarnos.";
+
+            return;
+
+        }
+
+        const cantidadPases = asistencia === "SI"
+            ? Number(document.getElementById("cantidadPases").value)
+            : 0;
+
+        const acompanantes = asistencia === "SI"
+            ? document.getElementById("acompanantes").value.trim()
+            : "";
+
+        if (
+            asistencia === "SI" &&
+            (!cantidadPases ||
+            cantidadPases > Number(invitado.invitado.pasesAsignados))
+        ) {
+
+            mensaje.textContent =
+                "La cantidad de personas supera los pases asignados.";
+
+            return;
+
+        }
+
+        const datos = {
+
+            token: token,
+
+            asistencia: asistencia,
+
+            cantidadPases: cantidadPases,
+
+            acompanantes: acompanantes
+
+        };
+
         boton.disabled = true;
+
         boton.textContent = "Enviando confirmación...";
 
         try {
 
-            if (DATOS_BODA.rsvpEndpoint) {
+            await fetch(DATOS_BODA.rsvpEndpoint, {
 
-                await fetch(DATOS_BODA.rsvpEndpoint, {
+                method: "POST",
 
-                    method: "POST",
+                mode: "no-cors",
 
-                    mode: "no-cors",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                body: JSON.stringify(datos)
 
-                    body: JSON.stringify(datos)
+            });
 
-                });
+            mensaje.textContent =
+                "¡Gracias! Tu respuesta fue enviada correctamente.";
 
-                mensaje.textContent =
-                    "¡Gracias! Tu respuesta ha sido enviada.";
+            invitado.invitado.estadoRSVP =
+                asistencia === "SI" ? "CONFIRMADO" : "NO ASISTIRÁ";
 
-            } else {
+            invitado.invitado.pasesConfirmados = cantidadPases;
 
-                const respuestas = JSON.parse(
-                    localStorage.getItem("respuestasBoda") || "[]"
-                );
-
-                respuestas.push(datos);
-
-                localStorage.setItem(
-                    "respuestasBoda",
-                    JSON.stringify(respuestas)
-                );
-
-                mensaje.textContent =
-                    "¡Gracias! Tu respuesta quedó registrada en este dispositivo. La confirmación en línea aún no está conectada.";
-
-            }
+            invitado.invitado.acompanantes = acompanantes;
 
             formulario.reset();
+
+            configurarCantidadAsistencia();
 
         } catch (error) {
 
@@ -496,7 +681,9 @@ function configurarFormulario() {
         }
 
         boton.disabled = false;
-        boton.innerHTML = 'Confirmar asistencia <span>♥</span>';
+
+        boton.innerHTML =
+            'Confirmar asistencia <span>♥</span>';
 
     });
 
