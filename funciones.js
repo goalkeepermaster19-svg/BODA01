@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     generarQR();
     configurarAnimaciones();
 
+    cargarInvitadoGLAM();
+
 });
 
 
