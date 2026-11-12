@@ -459,23 +459,49 @@
         </section>
 
 
-        <!-- ÁLBUM -->
-        <section class="seccion album" id="albumSeccion">
+       <!-- ÁLBUM COMPARTIDO -->
+<section class="seccion album" id="albumSeccion">
 
-            <span class="etiqueta-seccion">COMPARTE TUS RECUERDOS</span>
+    <span class="etiqueta-seccion">COMPARTE TUS RECUERDOS</span>
 
-            <h2 class="titulo-caligrafico">Nuestro álbum compartido</h2>
+    <h2 class="titulo-caligrafico">Nuestro álbum compartido</h2>
 
-            <p class="texto-intro">
-                Nos encantará ver esta celebración a través de tus fotografías.
-            </p>
+    <p class="texto-intro">
+        Queremos recordar este día desde todas las miradas.
+        Comparte tus fotografías y ayúdanos a conservar cada momento.
+    </p>
 
-            <a href="#" id="enlaceAlbum" target="_blank" class="boton-principal">
-                Compartir fotografías
-                <span>↗</span>
-            </a>
+    <div class="carga-fotografias">
 
-        </section>
+        <label for="seleccionarFotos" class="boton-principal">
+            Seleccionar fotografías
+            <span>＋</span>
+        </label>
+
+        <input
+            type="file"
+            id="seleccionarFotos"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            hidden
+        >
+
+        <div id="vistaPreviaFotos" class="vista-previa-fotos"></div>
+
+        <button
+            type="button"
+            id="botonEnviarFotos"
+            class="boton-principal"
+            disabled
+        >
+            Enviar fotografías ♥
+        </button>
+
+        <p id="mensajeFotos" class="mensaje-fotos"></p>
+
+    </div>
+
+</section>
 
 
         <!-- DESPEDIDA -->
