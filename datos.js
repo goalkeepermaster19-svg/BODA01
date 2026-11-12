@@ -78,7 +78,7 @@ const DATOS_BODA = {
 
     albumUrl: "",
 
-    rsvpEndpoint: "",
+    rsvpEndpoint: "https://script.google.com/macros/s/AKfycbyCNw7z1eAWgfhUT-tpO7wNErQLXyZu9VvUVTBEWJLMwX2FuUYr3NbWaJUphT7yjkkXvg/exec",
 
     codigoInvitacion: "BODA-2027-AV"
 
