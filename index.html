@@ -373,54 +373,63 @@
         </section>
 
 
-        <!-- CONFIRMACIÓN -->
-        <section class="seccion confirmacion" id="confirmacion">
+        <!-- CONFIRMACIÓN PERSONALIZADA -->
+<section class="seccion confirmacion" id="confirmacion">
 
-            <div class="confirmacion-decoracion">❦</div>
+    <div class="confirmacion-decoracion">❦</div>
 
-            <span class="etiqueta-seccion">QUEREMOS CONTAR CONTIGO</span>
+    <span class="etiqueta-seccion">QUEREMOS CONTAR CONTIGO</span>
 
-            <h2 class="titulo-caligrafico">¿Nos acompañas?</h2>
+    <h2 class="titulo-caligrafico">¡Hola, <span id="nombreInvitado">querido invitado</span>!</h2>
 
-            <p class="texto-intro">
-                Tu presencia hará que este día sea aún más especial.
-                Por favor, confirma tu asistencia.
-            </p>
+    <p class="texto-intro">
+        Hemos reservado un lugar especial para ti.
+        Nos encantará compartir este día contigo.
+    </p>
 
-            <form id="formularioRSVP">
+    <div class="datos-invitacion">
+        <p>Tu invitación contempla:</p>
+        <h3><span id="pasesAsignados">0</span> pases</h3>
+    </div>
 
-                <label for="nombreInvitado">Nombre completo</label>
-                <input type="text" id="nombreInvitado" required placeholder="Escribe tu nombre">
+    <form id="formularioRSVP">
 
-                <label for="asistencia">¿Podrás acompañarnos?</label>
-                <select id="asistencia" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="Sí asistiré">¡Sí, ahí estaré!</option>
-                    <option value="No podré asistir">Lo siento, no podré asistir</option>
-                </select>
+        <label for="asistencia">¿Podrás acompañarnos?</label>
 
-                <label for="cantidadAcompanantes">Número de acompañantes</label>
-                <select id="cantidadAcompanantes">
-                    <option value="0">Solo yo</option>
-                    <option value="1">1 acompañante</option>
-                    <option value="2">2 acompañantes</option>
-                    <option value="3">3 acompañantes</option>
-                </select>
+        <select id="asistencia" required>
+            <option value="">Selecciona una opción</option>
+            <option value="SI">¡Sí, ahí estaré!</option>
+            <option value="NO">Lo siento, no podré asistir</option>
+        </select>
 
-                <label for="mensajeInvitado">Un mensaje para los novios (opcional)</label>
-                <textarea id="mensajeInvitado" rows="3" placeholder="Escribe unas palabras..."></textarea>
+        <div id="datosAsistencia">
 
-                <button type="submit" class="boton-principal">
-                    Confirmar asistencia
-                    <span>♥</span>
-                </button>
+            <label for="cantidadPases">¿Cuántas personas asistirán?</label>
 
-                <p id="mensajeRSVP" class="mensaje-rsvp"></p>
+            <select id="cantidadPases" required>
+                <option value="1">1 persona</option>
+            </select>
 
-            </form>
+            <label for="acompanantes">Nombres de tus acompañantes</label>
 
-        </section>
+            <textarea
+                id="acompanantes"
+                rows="3"
+                placeholder="Escribe los nombres de tus acompañantes">
+            </textarea>
 
+        </div>
+
+        <button type="submit" class="boton-principal">
+            Confirmar asistencia
+            <span>♥</span>
+        </button>
+
+        <p id="mensajeRSVP" class="mensaje-rsvp"></p>
+
+    </form>
+
+</section>
 
         <!-- PASE DIGITAL -->
         <section class="seccion pase-digital" id="paseDigital">
