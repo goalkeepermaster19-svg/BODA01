@@ -83,3 +83,8 @@ const DATOS_BODA = {
     codigoInvitacion: "BODA-2027-AV"
 
 };
+
+
+// COMPROBACIÓN DE CONFIGURACIÓN
+console.log("DATOS BODA cargados correctamente.");
+console.log("ENDPOINT GLAM CONFIGURADO:", DATOS_BODA.rsvpEndpoint);
