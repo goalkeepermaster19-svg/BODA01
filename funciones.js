@@ -89,7 +89,6 @@ function cargarInvitadoGLAM() {
         document.getElementById("acompanantes").value =
             invitado.acompanantes || "";
 
-        // CARGAR GALERÍA DESPUÉS DE IDENTIFICAR AL INVITADO
         cargarGaleriaPublicaGLAM();
 
     };
@@ -113,7 +112,9 @@ function cargarInvitadoGLAM() {
 }
 
 
-/* CARGAR INFORMACIÓN */
+/* ==========================================
+   CARGAR INFORMACIÓN
+========================================== */
 
 function cargarDatos() {
 
@@ -141,7 +142,7 @@ function cargarDatos() {
     const fechaTexto = fecha.toLocaleDateString("es-ES", opciones);
 
     document.getElementById("fechaPortada").textContent =
-        fecha.toLocaleDateString("es-ES", opciones)
+        fechaTexto
             .toUpperCase()
             .replace(" DE ", " · ")
             .replace(" DE ", " · ");
@@ -167,7 +168,9 @@ function cargarDatos() {
 }
 
 
-/* UBICACIONES */
+/* ==========================================
+   UBICACIONES
+========================================== */
 
 function cargarUbicaciones() {
 
@@ -194,7 +197,9 @@ function configurarEnlaceMapa(id, enlace) {
 }
 
 
-/* ITINERARIO */
+/* ==========================================
+   ITINERARIO
+========================================== */
 
 function cargarItinerario() {
 
@@ -224,7 +229,9 @@ function cargarItinerario() {
 }
 
 
-/* VESTIMENTA */
+/* ==========================================
+   VESTIMENTA
+========================================== */
 
 function cargarVestimenta() {
 
@@ -252,7 +259,9 @@ function cargarVestimenta() {
 }
 
 
-/* REGALOS */
+/* ==========================================
+   REGALOS
+========================================== */
 
 function cargarRegalos() {
 
@@ -283,7 +292,9 @@ function cargarRegalos() {
 }
 
 
-/* SOBRE */
+/* ==========================================
+   SOBRE
+========================================== */
 
 function configurarSobre() {
 
@@ -313,7 +324,9 @@ function configurarSobre() {
 }
 
 
-/* MENÚ */
+/* ==========================================
+   MENÚ
+========================================== */
 
 function configurarMenu() {
 
@@ -341,7 +354,9 @@ function configurarMenu() {
 }
 
 
-/* MÚSICA */
+/* ==========================================
+   MÚSICA
+========================================== */
 
 function configurarMusica() {
 
@@ -383,7 +398,9 @@ function configurarMusica() {
 }
 
 
-/* CUENTA REGRESIVA */
+/* ==========================================
+   CUENTA REGRESIVA
+========================================== */
 
 function iniciarCuentaRegresiva() {
 
@@ -423,7 +440,9 @@ function iniciarCuentaRegresiva() {
 }
 
 
-/* GALERÍA ORIGINAL */
+/* ==========================================
+   GALERÍA ORIGINAL
+========================================== */
 
 function configurarGaleria() {
 
@@ -459,7 +478,9 @@ function configurarGaleria() {
 }
 
 
-/* VIDEO */
+/* ==========================================
+   VIDEO
+========================================== */
 
 function configurarVideo() {
 
@@ -478,7 +499,9 @@ function configurarVideo() {
 }
 
 
-/* ÁLBUM */
+/* ==========================================
+   ÁLBUM
+========================================== */
 
 function configurarAlbum() {
 
@@ -489,7 +512,9 @@ function configurarAlbum() {
 }
 
 
-/* FORMULARIO RSVP */
+/* ==========================================
+   FORMULARIO RSVP
+========================================== */
 
 function configurarFormulario() {
 
@@ -589,7 +614,9 @@ function configurarFormulario() {
 }
 
 
-/* CÓDIGO QR */
+/* ==========================================
+   CÓDIGO QR
+========================================== */
 
 function generarQR() {
 
@@ -612,7 +639,9 @@ function generarQR() {
 }
 
 
-/* ANIMACIONES */
+/* ==========================================
+   ANIMACIONES
+========================================== */
 
 function configurarAnimaciones() {
 
@@ -786,7 +815,9 @@ function configurarCargaFotosGLAM() {
 }
 
 
-/* REDUCIR TAMAÑO DE LAS FOTOGRAFÍAS */
+/* ==========================================
+   REDUCIR TAMAÑO DE LAS FOTOGRAFÍAS
+========================================== */
 
 function reducirFotoGLAM(archivo) {
 
