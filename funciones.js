@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
 
     cargarDatos();
@@ -12,13 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarCuentaRegresiva();
     generarQR();
     configurarAnimaciones();
-    
 
     cargarInvitadoGLAM();
-    
-    
 
 });
+
+
 /* ==========================================
    INVITACIÓN PERSONALIZADA GLAM
 ========================================== */
@@ -45,12 +45,7 @@ function cargarInvitadoGLAM() {
         return;
     }
 
-    console.log("TOKEN DETECTADO:", token);
-    console.log("CONSULTANDO INVITADO...");
-
     window.glamInvitacionCallback = function(respuesta) {
-
-        console.log("RESPUESTA DEL SERVIDOR:", respuesta);
 
         if (!respuesta || !respuesta.correcto) {
             mensaje.textContent =
@@ -94,7 +89,11 @@ function cargarInvitadoGLAM() {
         document.getElementById("acompanantes").value =
             invitado.acompanantes || "";
 
-        console.log("INVITADO CARGADO:", invitado);
+        configurarCantidadAsistencia();
+
+        // CARGAR GALERÍA DESPUÉS DE IDENTIFICAR AL INVITADO
+        cargarGaleriaPublicaGLAM();
+
     };
 
     const script = document.createElement("script");
@@ -109,11 +108,12 @@ function cargarInvitadoGLAM() {
 
     script.onerror = function() {
         mensaje.textContent = "No pudimos conectar con GLAM.";
-        console.error("ERROR AL CONECTAR CON APPS SCRIPT");
     };
 
     document.body.appendChild(script);
+
 }
+
 
 /* CARGAR INFORMACIÓN */
 
@@ -143,11 +143,10 @@ function cargarDatos() {
     const fechaTexto = fecha.toLocaleDateString("es-ES", opciones);
 
     document.getElementById("fechaPortada").textContent =
-        fecha.toLocaleDateString("es-ES", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric"
-        }).toUpperCase().replace(" DE ", " · ").replace(" DE ", " · ");
+        fecha.toLocaleDateString("es-ES", opciones)
+            .toUpperCase()
+            .replace(" DE ", " · ")
+            .replace(" DE ", " · ");
 
     document.getElementById("diaEvento").textContent =
         fecha.getDate().toString().padStart(2, "0");
@@ -192,11 +191,7 @@ function configurarEnlaceMapa(id, enlace) {
 
     const elemento = document.getElementById(id);
 
-    if (enlace) {
-        elemento.href = enlace;
-    } else {
-        elemento.href = "https://www.google.com/maps";
-    }
+    elemento.href = enlace || "https://www.google.com/maps";
 
 }
 
@@ -209,7 +204,7 @@ function cargarItinerario() {
 
     contenedor.innerHTML = "";
 
-    DATOS_BODA.itinerario.forEach((evento, indice) => {
+    DATOS_BODA.itinerario.forEach(evento => {
 
         const elemento = document.createElement("div");
 
@@ -332,9 +327,7 @@ function configurarMenu() {
     fondo.addEventListener("click", cerrarMenu);
 
     document.querySelectorAll(".menu-lateral a").forEach(enlace => {
-
         enlace.addEventListener("click", cerrarMenu);
-
     });
 
     function abrirMenu() {
@@ -400,8 +393,7 @@ function iniciarCuentaRegresiva() {
 
     function actualizar() {
 
-        const ahora = Date.now();
-        const diferencia = fechaObjetivo - ahora;
+        const diferencia = fechaObjetivo - Date.now();
 
         if (diferencia <= 0) {
 
@@ -412,15 +404,17 @@ function iniciarCuentaRegresiva() {
 
         }
 
-        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
-        const segundos = Math.floor((diferencia / 1000) % 60);
+        document.getElementById("dias").textContent =
+            Math.floor(diferencia / 86400000).toString().padStart(2, "0");
 
-        document.getElementById("dias").textContent = dias.toString().padStart(2, "0");
-        document.getElementById("horas").textContent = horas.toString().padStart(2, "0");
-        document.getElementById("minutos").textContent = minutos.toString().padStart(2, "0");
-        document.getElementById("segundos").textContent = segundos.toString().padStart(2, "0");
+        document.getElementById("horas").textContent =
+            Math.floor((diferencia / 3600000) % 24).toString().padStart(2, "0");
+
+        document.getElementById("minutos").textContent =
+            Math.floor((diferencia / 60000) % 60).toString().padStart(2, "0");
+
+        document.getElementById("segundos").textContent =
+            Math.floor((diferencia / 1000) % 60).toString().padStart(2, "0");
 
     }
 
@@ -431,7 +425,7 @@ function iniciarCuentaRegresiva() {
 }
 
 
-/* GALERÍA */
+/* GALERÍA ORIGINAL */
 
 function configurarGaleria() {
 
@@ -492,174 +486,12 @@ function configurarAlbum() {
 
     const seccion = document.getElementById("albumSeccion");
 
-    // El álbum estará disponible en esta invitación.
     seccion.classList.remove("oculto");
 
 }
 
-/* ==========================================
-   INVITACIÓN PERSONALIZADA GLAM
-========================================== */
 
-window.glamInvitadoActual = null;
-
-function cargarInvitadoGLAM() {
-
-    const parametros = new URLSearchParams(window.location.search);
-    const token = parametros.get("token");
-    console.log("TOKEN DETECTADO:", token);
-console.log("ENDPOINT GLAM:", DATOS_BODA.rsvpEndpoint);
-
-    const mensaje = document.getElementById("mensajeRSVP");
-    const formulario = document.getElementById("formularioRSVP");
-
-    if (!token) {
-
-        mensaje.textContent =
-            "Esta invitación requiere un enlace personalizado.";
-
-        formulario.style.display = "none";
-
-        return;
-
-    }
-
-    if (!DATOS_BODA.rsvpEndpoint) {
-
-        mensaje.textContent =
-            "No se encuentra configurada la conexión con GLAM.";
-
-        formulario.style.display = "none";
-
-        return;
-
-    }
-
-    window.glamInvitacionCallback = function(respuesta) {
-        console.log("RESPUESTA DEL SERVIDOR:", respuesta);
-
-        if (!respuesta || !respuesta.correcto) {
-
-            mensaje.textContent =
-                respuesta?.mensaje || "No se pudo identificar tu invitación.";
-
-            formulario.style.display = "none";
-
-            return;
-
-        }
-
-        window.glamInvitadoActual = respuesta;
-
-        const invitado = respuesta.invitado;
-
-        // Nombre personalizado
-        document.getElementById("nombreInvitado").textContent =
-            invitado.nombre;
-
-        // Pases asignados
-        const pases = Number(invitado.pasesAsignados || 0);
-
-        document.getElementById("pasesAsignados").textContent = pases;
-
-        // Generar opciones según los pases autorizados
-        const selector = document.getElementById("cantidadPases");
-
-        selector.innerHTML = "";
-
-        for (let i = 1; i <= pases; i++) {
-
-            const opcion = document.createElement("option");
-
-            opcion.value = i;
-
-            opcion.textContent =
-                i === 1 ? "1 persona" : `${i} personas`;
-
-            selector.appendChild(opcion);
-
-        }
-
-        // Si no tiene pases disponibles
-        if (pases < 1) {
-
-            mensaje.textContent =
-                "Esta invitación no tiene pases disponibles.";
-
-            formulario.style.display = "none";
-
-            return;
-
-        }
-
-        // Recuperar confirmación anterior
-        if (invitado.estadoRSVP === "CONFIRMADO") {
-
-            mensaje.textContent =
-                "Ya registraste tu asistencia. Puedes actualizar tu respuesta.";
-
-        } else if (invitado.estadoRSVP === "NO ASISTIRÁ") {
-
-            mensaje.textContent =
-                "Anteriormente registraste que no podrás asistir.";
-
-        }
-
-        // Recuperar acompañantes
-        document.getElementById("acompanantes").value =
-            invitado.acompanantes || "";
-
-        configurarCantidadAsistencia();
-
-    };
-
-    const script = document.createElement("script");
-
-    const separador = DATOS_BODA.rsvpEndpoint.includes("?")
-        ? "&"
-        : "?";
-
-    script.src =
-        DATOS_BODA.rsvpEndpoint +
-        separador +
-        "token=" + encodeURIComponent(token) +
-        "&callback=glamInvitacionCallback";
-
-    script.onerror = function() {
-
-        mensaje.textContent =
-            "No pudimos conectar con el sistema de invitaciones GLAM.";
-
-    };
-
-    document.body.appendChild(script);
-
-}
-
-
-/* CONTROL DE CANTIDAD DE ASISTENTES */
-
-function configurarCantidadAsistencia() {
-
-    const asistencia = document.getElementById("asistencia");
-    const datos = document.getElementById("datosAsistencia");
-    const cantidad = document.getElementById("cantidadPases");
-
-    asistencia.addEventListener("change", () => {
-
-        const asistira = asistencia.value === "SI";
-
-        datos.style.display = asistira ? "block" : "none";
-
-        cantidad.required = asistira;
-
-    });
-
-}
-
-/* ==========================================
-   FORMULARIO RSVP CONECTADO A GLAM
-========================================== */
+/* FORMULARIO RSVP */
 
 function configurarFormulario() {
 
@@ -679,24 +511,15 @@ function configurarFormulario() {
         ).get("token");
 
         if (!invitado || !token) {
-
-            mensaje.textContent =
-                "No se pudo identificar tu invitación.";
-
+            mensaje.textContent = "No se pudo identificar tu invitación.";
             return;
-
         }
 
-        const asistencia =
-            document.getElementById("asistencia").value;
+        const asistencia = document.getElementById("asistencia").value;
 
         if (!asistencia) {
-
-            mensaje.textContent =
-                "Selecciona si podrás acompañarnos.";
-
+            mensaje.textContent = "Selecciona si podrás acompañarnos.";
             return;
-
         }
 
         const cantidadPases = asistencia === "SI"
@@ -712,28 +535,19 @@ function configurarFormulario() {
             (!cantidadPases ||
             cantidadPases > Number(invitado.invitado.pasesAsignados))
         ) {
-
             mensaje.textContent =
                 "La cantidad de personas supera los pases asignados.";
-
             return;
-
         }
 
         const datos = {
-
             token: token,
-
             asistencia: asistencia,
-
             cantidadPases: cantidadPases,
-
             acompanantes: acompanantes
-
         };
 
         boton.disabled = true;
-
         boton.textContent = "Enviando confirmación...";
 
         try {
@@ -741,7 +555,6 @@ function configurarFormulario() {
             await fetch(DATOS_BODA.rsvpEndpoint, {
 
                 method: "POST",
-
                 mode: "no-cors",
 
                 headers: {
@@ -759,12 +572,9 @@ function configurarFormulario() {
                 asistencia === "SI" ? "CONFIRMADO" : "NO ASISTIRÁ";
 
             invitado.invitado.pasesConfirmados = cantidadPases;
-
             invitado.invitado.acompanantes = acompanantes;
 
             formulario.reset();
-
-            configurarCantidadAsistencia();
 
         } catch (error) {
 
@@ -774,9 +584,7 @@ function configurarFormulario() {
         }
 
         boton.disabled = false;
-
-        boton.innerHTML =
-            'Confirmar asistencia <span>♥</span>';
+        boton.innerHTML = 'Confirmar asistencia <span>♥</span>';
 
     });
 
@@ -790,33 +598,23 @@ function generarQR() {
     const contenedor = document.getElementById("codigoQR");
 
     if (typeof QRCode === "undefined") {
-
         contenedor.textContent = DATOS_BODA.codigoInvitacion;
-
         return;
-
     }
 
     new QRCode(contenedor, {
-
         text: DATOS_BODA.codigoInvitacion,
-
         width: 150,
-
         height: 150,
-
         colorDark: "#625144",
-
         colorLight: "#ffffff",
-
         correctLevel: QRCode.CorrectLevel.H
-
     });
 
 }
 
 
-/* ANIMACIONES DE APARICIÓN */
+/* ANIMACIONES */
 
 function configurarAnimaciones() {
 
@@ -825,9 +623,7 @@ function configurarAnimaciones() {
     );
 
     elementos.forEach(elemento => {
-
         elemento.classList.add("revelar");
-
     });
 
     const observador = new IntersectionObserver((entradas, observer) => {
@@ -835,11 +631,8 @@ function configurarAnimaciones() {
         entradas.forEach(entrada => {
 
             if (entrada.isIntersecting) {
-
                 entrada.target.classList.add("visible");
-
                 observer.unobserve(entrada.target);
-
             }
 
         });
@@ -849,16 +642,15 @@ function configurarAnimaciones() {
     });
 
     elementos.forEach(elemento => {
-
         observador.observe(elemento);
-
     });
 
 }
 
-// ======================================================
-// GLAM - ÁLBUM COLABORATIVO DE FOTOGRAFÍAS
-// ======================================================
+
+/* ==========================================
+   GLAM - ÁLBUM COLABORATIVO
+========================================== */
 
 function configurarCargaFotosGLAM() {
 
@@ -866,6 +658,8 @@ function configurarCargaFotosGLAM() {
     const boton = document.getElementById("botonEnviarFotos");
     const vistaPrevia = document.getElementById("vistaPreviaFotos");
     const mensaje = document.getElementById("mensajeFotos");
+
+    if (!selector || !boton || !vistaPrevia || !mensaje) return;
 
     const token = new URLSearchParams(
         window.location.search
@@ -876,16 +670,10 @@ function configurarCargaFotosGLAM() {
     let fotografias = [];
 
     if (!token || !endpoint) {
-
-        mensaje.textContent =
-            "No se pudo identificar tu invitación.";
-
+        mensaje.textContent = "No se pudo identificar tu invitación.";
         selector.disabled = true;
-
         return;
     }
-
-    // SELECCIONAR FOTOGRAFÍAS
 
     selector.addEventListener("change", () => {
 
@@ -910,7 +698,6 @@ function configurarCargaFotosGLAM() {
             const imagen = document.createElement("img");
 
             imagen.src = URL.createObjectURL(foto);
-
             imagen.style.width = "90px";
             imagen.style.height = "90px";
             imagen.style.objectFit = "cover";
@@ -928,18 +715,14 @@ function configurarCargaFotosGLAM() {
 
     });
 
-    // ENVIAR FOTOGRAFÍAS
-
     boton.addEventListener("click", async () => {
 
         if (!fotografias.length) return;
 
         boton.disabled = true;
-
         selector.disabled = true;
 
-        mensaje.textContent =
-            "Preparando fotografías...";
+        mensaje.textContent = "Preparando fotografías...";
 
         try {
 
@@ -959,23 +742,16 @@ function configurarCargaFotosGLAM() {
                 const base64 = imagenReducida.split(",")[1];
 
                 const datos = {
-
                     tipo: "subir_foto",
-
                     token: token,
-
                     nombreArchivo: foto.name,
-
                     tipoMime: "image/jpeg",
-
                     base64: base64
-
                 };
 
                 await fetch(endpoint, {
 
                     method: "POST",
-
                     mode: "no-cors",
 
                     headers: {
@@ -989,13 +765,10 @@ function configurarCargaFotosGLAM() {
             }
 
             mensaje.textContent =
-                "¡Gracias por compartir tus recuerdos! " +
-                "Hemos enviado tus fotografías.";
+                "¡Gracias por compartir tus recuerdos! Hemos enviado tus fotografías.";
 
             fotografias = [];
-
             selector.value = "";
-
             vistaPrevia.innerHTML = "";
 
         } catch (error) {
@@ -1008,7 +781,6 @@ function configurarCargaFotosGLAM() {
         }
 
         selector.disabled = false;
-
         boton.disabled = true;
 
     });
@@ -1016,14 +788,13 @@ function configurarCargaFotosGLAM() {
 }
 
 
-// REDUCIR TAMAÑO DE LAS FOTOGRAFÍAS
+/* REDUCIR TAMAÑO DE LAS FOTOGRAFÍAS */
 
 function reducirFotoGLAM(archivo) {
 
     return new Promise((resolve, reject) => {
 
         const imagen = new Image();
-
         const lector = new FileReader();
 
         lector.onload = evento => {
@@ -1036,15 +807,11 @@ function reducirFotoGLAM(archivo) {
                 let alto = imagen.height;
 
                 if (ancho > alto && ancho > maximo) {
-
                     alto = Math.round(alto * maximo / ancho);
                     ancho = maximo;
-
                 } else if (alto > maximo) {
-
                     ancho = Math.round(ancho * maximo / alto);
                     alto = maximo;
-
                 }
 
                 const lienzo = document.createElement("canvas");
@@ -1054,13 +821,7 @@ function reducirFotoGLAM(archivo) {
 
                 const contexto = lienzo.getContext("2d");
 
-                contexto.drawImage(
-                    imagen,
-                    0,
-                    0,
-                    ancho,
-                    alto
-                );
+                contexto.drawImage(imagen, 0, 0, ancho, alto);
 
                 resolve(
                     lienzo.toDataURL("image/jpeg", 0.75)
@@ -1069,19 +830,21 @@ function reducirFotoGLAM(archivo) {
             };
 
             imagen.onerror = reject;
-
             imagen.src = evento.target.result;
 
         };
 
         lector.onerror = reject;
-
         lector.readAsDataURL(archivo);
 
     });
 
 }
 
+
+/* ==========================================
+   GLAM - GALERÍA PÚBLICA DE FOTOGRAFÍAS
+========================================== */
 
 function cargarGaleriaPublicaGLAM() {
 
@@ -1091,33 +854,39 @@ function cargarGaleriaPublicaGLAM() {
 
     const endpoint = DATOS_BODA.rsvpEndpoint;
 
-    const contenedor = document.getElementById(
-        "galeriaPublicaGLAM"
-    );
+    const contenedor = document.getElementById("galeriaPublicaGLAM");
 
     if (!token || !endpoint || !contenedor) return;
 
-    const callback = "galamGaleriaCallback";
+    contenedor.innerHTML = "<p>Cargando recuerdos...</p>";
+
+    const callback = "glamGaleriaCallback";
 
     window[callback] = function(respuesta) {
 
         delete window[callback];
 
         if (!respuesta || !respuesta.correcto) {
+
             contenedor.innerHTML =
                 "<p>No se pudieron cargar los recuerdos.</p>";
+
             return;
         }
 
-        if (!respuesta.fotografias.length) {
+        const fotografias = respuesta.fotografias || [];
+
+        if (!fotografias.length) {
+
             contenedor.innerHTML =
                 "<p>Pronto aparecerán aquí los recuerdos compartidos.</p>";
+
             return;
         }
 
         contenedor.innerHTML = "";
 
-        respuesta.fotografias.forEach(foto => {
+        fotografias.forEach(foto => {
 
             const imagen = document.createElement("img");
 
@@ -1127,13 +896,13 @@ function cargarGaleriaPublicaGLAM() {
             imagen.alt = foto.nombre || "Recuerdo compartido";
             imagen.className = "foto-publica-glam";
 
-            imagen.addEventListener("click", function() {
+            imagen.addEventListener("click", () => {
 
                 const visor = document.getElementById("visorFotos");
                 const ampliada = document.getElementById("imagenAmpliada");
 
                 ampliada.src = imagen.src;
-                visor.classList.add("activo");
+                visor.classList.add("visible");
 
             });
 
@@ -1145,19 +914,24 @@ function cargarGaleriaPublicaGLAM() {
 
     const script = document.createElement("script");
 
+    const separador = endpoint.includes("?") ? "&" : "?";
+
     script.src =
         endpoint +
-        "?galeria=1" +
+        separador +
+        "galeria=1" +
         "&token=" + encodeURIComponent(token) +
         "&callback=" + callback;
 
     script.onerror = function() {
+
         contenedor.innerHTML =
             "<p>No se pudo conectar con el álbum.</p>";
+
         delete window[callback];
+
     };
 
     document.body.appendChild(script);
 
 }
-
