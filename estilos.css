@@ -1825,3 +1825,724 @@ main > section:not(.portada)::after {
 }
 
 
+
+
+
+
+/* =========================================================
+   GLAM · BODA-02
+   JARDÍN ROMÁNTICO
+   Identidad visual: naturaleza, elegancia y romanticismo
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. PALETA DE COLORES
+   --------------------------------------------------------- */
+
+:root {
+    --marfil: #faf8f1;
+    --crema: #f0eee3;
+    --dorado: #b69b68;
+    --cafe: #53634f;
+    --texto: #5e6659;
+
+    --verde-salvia: #a7b49b;
+    --verde-oliva: #687b60;
+    --verde-profundo: #405442;
+    --verde-claro: #e7ebdf;
+    --rosa-flor: #e8c9c4;
+    --blanco-calido: #fffdf8;
+}
+
+
+/* ---------------------------------------------------------
+   2. FONDO GENERAL
+   --------------------------------------------------------- */
+
+body {
+    background-color: var(--marfil);
+    color: var(--texto);
+}
+
+.invitacion {
+    background: var(--marfil);
+}
+
+.seccion {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   3. SOBRE INICIAL
+   --------------------------------------------------------- */
+
+.sobre-inicial {
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(167, 180, 155, 0.24),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(232, 201, 196, 0.20),
+            transparent 35%
+        ),
+        #f7f6ed !important;
+}
+
+.sobre-decoracion {
+    opacity: 0.8;
+}
+
+.sobre-etiqueta {
+    color: var(--verde-oliva) !important;
+    letter-spacing: 4px;
+}
+
+.sobre-monograma {
+    color: var(--verde-profundo) !important;
+}
+
+.sobre-monograma span {
+    color: var(--dorado) !important;
+}
+
+.sobre-frase {
+    color: var(--texto) !important;
+}
+
+.sello {
+    border-color: var(--dorado) !important;
+    color: var(--verde-oliva) !important;
+}
+
+.boton-abrir {
+    background: var(--verde-profundo) !important;
+    color: white !important;
+    border: 1px solid var(--verde-profundo) !important;
+    transition: all 0.3s ease;
+}
+
+.boton-abrir:hover {
+    background: var(--verde-oliva) !important;
+    transform: translateY(-3px);
+}
+
+.sobre-pie {
+    color: var(--verde-oliva) !important;
+}
+
+
+/* ---------------------------------------------------------
+   4. CONTROLES FLOTANTES
+   --------------------------------------------------------- */
+
+.control-flotante {
+    background: var(--verde-profundo) !important;
+    color: #fffdf8 !important;
+    border: 1px solid rgba(255,255,255,0.45) !important;
+    box-shadow: 0 5px 20px rgba(48, 66, 47, 0.20);
+}
+
+.control-flotante:hover {
+    background: var(--verde-oliva) !important;
+}
+
+
+/* ---------------------------------------------------------
+   5. MENÚ LATERAL
+   --------------------------------------------------------- */
+
+.menu-lateral {
+    background: #f8f7ef !important;
+}
+
+.menu-etiqueta {
+    color: var(--verde-oliva) !important;
+}
+
+.menu-lateral a {
+    color: var(--verde-profundo) !important;
+    transition: color 0.3s ease;
+}
+
+.menu-lateral a:hover {
+    color: var(--dorado) !important;
+}
+
+.cerrar-menu {
+    color: var(--verde-profundo) !important;
+}
+
+
+/* ---------------------------------------------------------
+   6. PORTADA
+   --------------------------------------------------------- */
+
+.portada {
+    background-color: var(--verde-profundo);
+}
+
+.portada-velo {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(31, 49, 36, 0.22),
+            rgba(31, 49, 36, 0.55),
+            rgba(31, 49, 36, 0.78)
+        ) !important;
+}
+
+.portada-contenido {
+    color: #fffdf8 !important;
+}
+
+.texto-superior {
+    letter-spacing: 5px;
+    color: #f0e7d3 !important;
+}
+
+.nombres-portada {
+    color: #fffdf8 !important;
+}
+
+.nombres-portada .ampersand {
+    color: #d9c49a !important;
+}
+
+.ornamento {
+    color: #e1d0a9 !important;
+}
+
+.ornamento span {
+    background: #d9c49a !important;
+}
+
+.portada-mensaje {
+    color: rgba(255,255,255,0.92) !important;
+}
+
+.fecha-portada {
+    color: #f1dfb8 !important;
+    border-color: rgba(241, 223, 184, 0.65) !important;
+}
+
+.flecha-bajar {
+    color: #fffdf8 !important;
+}
+
+
+/* ---------------------------------------------------------
+   7. PRESENTACIÓN
+   --------------------------------------------------------- */
+
+.presentacion {
+    background:
+        radial-gradient(
+            ellipse at top left,
+            rgba(167, 180, 155, 0.15),
+            transparent 40%
+        ),
+        var(--marfil) !important;
+}
+
+.etiqueta-seccion {
+    color: var(--verde-oliva) !important;
+    letter-spacing: 3px;
+}
+
+.titulo-caligrafico {
+    color: var(--verde-profundo) !important;
+}
+
+.separador-floral {
+    color: var(--dorado) !important;
+}
+
+.texto-presentacion,
+.texto-intro {
+    color: var(--texto) !important;
+}
+
+.decoracion-esquina {
+    color: var(--verde-salvia) !important;
+    opacity: 0.45;
+}
+
+.fecha-detalle {
+    color: var(--verde-profundo) !important;
+}
+
+.fecha-dia {
+    color: var(--verde-oliva) !important;
+}
+
+.fecha-detalle div {
+    border-left-color: var(--dorado) !important;
+}
+
+
+/* ---------------------------------------------------------
+   8. CUENTA REGRESIVA
+   --------------------------------------------------------- */
+
+.cuenta-regresiva {
+    background:
+        linear-gradient(
+            135deg,
+            #465b46,
+            #687d61
+        ) !important;
+    color: #fffdf8 !important;
+}
+
+.cuenta-regresiva .etiqueta-seccion,
+.cuenta-regresiva .titulo-caligrafico,
+.cuenta-regresiva .contador-pie {
+    color: #fffdf8 !important;
+}
+
+.contador-unidad strong {
+    color: #f2e4c7 !important;
+}
+
+.contador-unidad span {
+    color: #f4f0e5 !important;
+}
+
+.contador > i {
+    color: #ddc99f !important;
+}
+
+.onda-superior svg path,
+.onda-inferior svg path {
+    fill: var(--marfil) !important;
+}
+
+
+/* ---------------------------------------------------------
+   9. HISTORIA
+   --------------------------------------------------------- */
+
+.historia {
+    background: #f0f0e6 !important;
+}
+
+.historia-imagen img {
+    border-color: #fffdf8 !important;
+    box-shadow: 0 12px 35px rgba(48, 66, 47, 0.15);
+}
+
+.marco-foto {
+    border-color: var(--dorado) !important;
+}
+
+.historia-texto p {
+    color: var(--texto) !important;
+}
+
+.firma-historia {
+    color: var(--verde-oliva) !important;
+}
+
+
+/* ---------------------------------------------------------
+   10. GALERÍA ORIGINAL
+   --------------------------------------------------------- */
+
+.galeria {
+    background: var(--marfil) !important;
+}
+
+.foto-galeria {
+    border-color: #fffdf8 !important;
+    box-shadow: 0 10px 28px rgba(48, 66, 47, 0.13);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.foto-galeria:hover {
+    transform: translateY(-5px) rotate(0deg);
+    box-shadow: 0 15px 35px rgba(48, 66, 47, 0.20);
+}
+
+
+/* ---------------------------------------------------------
+   11. VIDEO
+   --------------------------------------------------------- */
+
+.video-seccion {
+    background: #e9ede3 !important;
+}
+
+.video-contenedor {
+    border: 8px solid #fffdf8 !important;
+    box-shadow: 0 12px 35px rgba(48, 66, 47, 0.14);
+}
+
+.video-placeholder {
+    background: linear-gradient(
+        135deg,
+        #e2e8dc,
+        #f7f4e9
+    ) !important;
+    color: var(--verde-profundo) !important;
+}
+
+
+/* ---------------------------------------------------------
+   12. ITINERARIO
+   --------------------------------------------------------- */
+
+.itinerario {
+    background: var(--marfil) !important;
+}
+
+.itinerario-lista {
+    color: var(--texto);
+}
+
+.itinerario-lista > div {
+    border-color: rgba(104, 123, 96, 0.22);
+}
+
+.itinerario-lista strong,
+.itinerario-lista h3 {
+    color: var(--verde-profundo);
+}
+
+
+/* ---------------------------------------------------------
+   13. UBICACIONES
+   --------------------------------------------------------- */
+
+.ubicaciones {
+    background: #eef0e7 !important;
+}
+
+.ubicacion-tarjeta {
+    background: #fffdf8 !important;
+    border: 1px solid rgba(104, 123, 96, 0.22) !important;
+    box-shadow: 0 10px 30px rgba(48, 66, 47, 0.08);
+}
+
+.icono-ubicacion {
+    color: var(--verde-oliva) !important;
+}
+
+.ubicacion-tarjeta h3 {
+    color: var(--verde-profundo) !important;
+}
+
+.ubicacion-tarjeta p,
+.ubicacion-tarjeta span {
+    color: var(--texto);
+}
+
+.boton-secundario {
+    background: transparent !important;
+    border: 1px solid var(--verde-oliva) !important;
+    color: var(--verde-profundo) !important;
+}
+
+.boton-secundario:hover {
+    background: var(--verde-profundo) !important;
+    color: white !important;
+}
+
+
+/* ---------------------------------------------------------
+   14. VESTIMENTA
+   --------------------------------------------------------- */
+
+.vestimenta {
+    background: #f8f7ef !important;
+}
+
+.vestimenta-icono {
+    color: var(--verde-oliva) !important;
+}
+
+.vestimenta h3 {
+    color: var(--verde-profundo) !important;
+}
+
+.vestimenta p {
+    color: var(--texto) !important;
+}
+
+.paleta-colores span {
+    border: 2px solid #fffdf8;
+    box-shadow: 0 3px 10px rgba(48, 66, 47, 0.12);
+}
+
+
+/* ---------------------------------------------------------
+   15. REGALOS
+   --------------------------------------------------------- */
+
+.regalos {
+    background: #eef0e7 !important;
+}
+
+.regalos-lista > div {
+    background: #fffdf8 !important;
+    border: 1px solid rgba(104, 123, 96, 0.20);
+    box-shadow: 0 8px 25px rgba(48, 66, 47, 0.07);
+}
+
+.regalos-lista h3 {
+    color: var(--verde-profundo);
+}
+
+
+/* ---------------------------------------------------------
+   16. CONFIRMACIÓN DE ASISTENCIA
+   --------------------------------------------------------- */
+
+.confirmacion {
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(167, 180, 155, 0.18),
+            transparent 38%
+        ),
+        #f8f7ef !important;
+}
+
+.confirmacion-decoracion {
+    color: var(--verde-salvia) !important;
+}
+
+.confirmacion h2 {
+    color: var(--verde-profundo) !important;
+}
+
+.datos-invitacion {
+    background: #e9ede3 !important;
+    border: 1px solid rgba(104, 123, 96, 0.22);
+}
+
+.datos-invitacion h3 {
+    color: var(--verde-profundo) !important;
+}
+
+.confirmacion form label {
+    color: var(--verde-profundo) !important;
+}
+
+.confirmacion input,
+.confirmacion select,
+.confirmacion textarea {
+    background: #fffdf8 !important;
+    border: 1px solid #cbd2c3 !important;
+    color: var(--texto) !important;
+    border-radius: 8px;
+}
+
+.confirmacion input:focus,
+.confirmacion select:focus,
+.confirmacion textarea:focus {
+    outline: none;
+    border-color: var(--verde-oliva) !important;
+    box-shadow: 0 0 0 3px rgba(104, 123, 96, 0.12);
+}
+
+
+/* ---------------------------------------------------------
+   17. BOTONES PRINCIPALES
+   --------------------------------------------------------- */
+
+.boton-principal {
+    background: var(--verde-profundo) !important;
+    color: #fffdf8 !important;
+    border: 1px solid var(--verde-profundo) !important;
+    transition: all 0.3s ease;
+}
+
+.boton-principal:hover:not(:disabled) {
+    background: var(--verde-oliva) !important;
+    border-color: var(--verde-oliva) !important;
+    transform: translateY(-2px);
+}
+
+.boton-principal:disabled {
+    opacity: 0.55;
+}
+
+
+/* ---------------------------------------------------------
+   18. PASE DIGITAL
+   --------------------------------------------------------- */
+
+.pase-digital {
+    background: #eef0e7 !important;
+}
+
+.pase-tarjeta {
+    background: #fffdf8 !important;
+    border: 1px solid #d6d8c9 !important;
+    box-shadow: 0 15px 40px rgba(48, 66, 47, 0.12);
+}
+
+.pase-corazon {
+    color: var(--dorado) !important;
+}
+
+.pase-tarjeta h3 {
+    color: var(--verde-profundo) !important;
+}
+
+.pase-tarjeta p {
+    color: var(--texto);
+}
+
+.pase-pie {
+    color: var(--verde-oliva) !important;
+}
+
+
+/* ---------------------------------------------------------
+   19. ÁLBUM COMPARTIDO
+   --------------------------------------------------------- */
+
+.album {
+    background: var(--marfil) !important;
+}
+
+.carga-fotografias {
+    background: #eef0e7;
+    border: 1px solid rgba(104, 123, 96, 0.18);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.vista-previa-fotos {
+    border-color: var(--verde-salvia);
+}
+
+
+/* ---------------------------------------------------------
+   20. PIE DE PÁGINA
+   --------------------------------------------------------- */
+
+.pie-pagina {
+    background: var(--verde-profundo) !important;
+    color: #fffdf8 !important;
+}
+
+.pie-pagina p,
+.pie-pagina span {
+    color: #f2eadb !important;
+}
+
+.pie-pagina .titulo-caligrafico {
+    color: #fffdf8 !important;
+}
+
+.pie-ornamento {
+    color: #d9c49a !important;
+}
+
+.pie-marca {
+    color: rgba(255,255,255,0.78) !important;
+}
+
+.pie-marca strong {
+    color: #e4d2aa !important;
+}
+
+
+/* ---------------------------------------------------------
+   21. VISOR DE FOTOGRAFÍAS
+   --------------------------------------------------------- */
+
+.visor-fotos {
+    background: rgba(24, 36, 26, 0.96) !important;
+}
+
+.visor-fotos button {
+    color: #fffdf8 !important;
+}
+
+
+/* ---------------------------------------------------------
+   22. DECORACIÓN BOTÁNICA
+   --------------------------------------------------------- */
+
+.decoracion-esquina {
+    font-size: clamp(55px, 8vw, 100px);
+    color: var(--verde-salvia) !important;
+    opacity: 0.32;
+}
+
+.separador-floral {
+    color: var(--dorado) !important;
+    letter-spacing: 5px;
+}
+
+.historia,
+.presentacion,
+.ubicaciones,
+.vestimenta,
+.regalos {
+    background-image:
+        radial-gradient(
+            circle at 3% 8%,
+            rgba(167, 180, 155, 0.08),
+            transparent 22%
+        ),
+        radial-gradient(
+            circle at 97% 92%,
+            rgba(232, 201, 196, 0.08),
+            transparent 22%
+        );
+}
+
+
+/* ---------------------------------------------------------
+   23. RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+    .portada-velo {
+        background: linear-gradient(
+            to bottom,
+            rgba(31, 49, 36, 0.28),
+            rgba(31, 49, 36, 0.78)
+        ) !important;
+    }
+
+    .decoracion-esquina {
+        font-size: 55px;
+        opacity: 0.25;
+    }
+
+    .carga-fotografias {
+        padding: 15px;
+    }
+
+    .ubicacion-tarjeta {
+        border-radius: 12px;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   24. RESPETO A LAS ANIMACIONES
+   --------------------------------------------------------- */
+
+.boton-principal,
+.boton-secundario,
+.boton-abrir,
+.control-flotante,
+.foto-galeria {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
