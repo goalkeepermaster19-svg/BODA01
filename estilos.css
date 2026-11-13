@@ -1681,3 +1681,147 @@ main > section:not(.portada)::after {
 }
 
 
+/* =====================================================
+   GLAM - ÁLBUM VINTAGE / FOTOGRAFÍAS REVELADAS
+===================================================== */
+
+#galeriaPublicaGLAM {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 8px !important;
+
+    width: 100% !important;
+    height: 195px !important;
+    padding: 12px 7px 17px !important;
+    box-sizing: border-box;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+
+    background: #f5eee4;
+    border-radius: 12px;
+}
+
+/* Marco de fotografía revelada */
+
+#galeriaPublicaGLAM .foto-publica-glam {
+    flex: 0 0 135px !important;
+    width: 135px !important;
+    min-width: 135px !important;
+    height: 155px !important;
+
+    padding: 5px 5px 17px !important;
+    box-sizing: border-box;
+
+    object-fit: cover;
+    background: #fffdf8;
+
+    border: 1px solid #ded3c2;
+    border-radius: 2px;
+
+    box-shadow: 1px 3px 7px rgba(70, 48, 30, .20);
+
+    cursor: pointer;
+    scroll-snap-align: start;
+
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#galeriaPublicaGLAM .foto-publica-glam:nth-child(odd) {
+    transform: rotate(-1.2deg);
+}
+
+#galeriaPublicaGLAM .foto-publica-glam:nth-child(even) {
+    transform: rotate(1.2deg);
+}
+
+#galeriaPublicaGLAM .foto-publica-glam:hover {
+    transform: translateY(-4px) rotate(0deg);
+    box-shadow: 2px 7px 13px rgba(70, 48, 30, .25);
+}
+
+/* Barra de desplazamiento */
+
+#galeriaPublicaGLAM::-webkit-scrollbar {
+    height: 5px;
+}
+
+#galeriaPublicaGLAM::-webkit-scrollbar-track {
+    background: #e9ded0;
+    border-radius: 10px;
+}
+
+#galeriaPublicaGLAM::-webkit-scrollbar-thumb {
+    background: #ad9277;
+    border-radius: 10px;
+}
+
+/* Celulares */
+
+@media (max-width: 600px) {
+    #galeriaPublicaGLAM {
+        height: 175px !important;
+        gap: 6px !important;
+        padding: 10px 5px 15px !important;
+    }
+
+    #galeriaPublicaGLAM .foto-publica-glam {
+        flex-basis: 118px !important;
+        width: 118px !important;
+        min-width: 118px !important;
+        height: 140px !important;
+    }
+}
+
+/* =====================================================
+   VISOR AMPLIADO CON NAVEGACIÓN
+===================================================== */
+
+#visorFotos {
+    position: relative;
+}
+
+#visorFotos .navegacion-vintage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    pointer-events: none;
+    z-index: 20;
+}
+
+#visorFotos .navegacion-vintage button {
+    pointer-events: auto;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 50%;
+    background: rgba(35, 27, 23, .65);
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+#visorFotos .contador-vintage {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 21;
+    color: white;
+    background: rgba(35, 27, 23, .65);
+    padding: 6px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+
