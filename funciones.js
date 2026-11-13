@@ -89,8 +89,6 @@ function cargarInvitadoGLAM() {
         document.getElementById("acompanantes").value =
             invitado.acompanantes || "";
 
-        configurarCantidadAsistencia();
-
         // CARGAR GALERÍA DESPUÉS DE IDENTIFICAR AL INVITADO
         cargarGaleriaPublicaGLAM();
 
@@ -848,21 +846,24 @@ function reducirFotoGLAM(archivo) {
 
 function cargarGaleriaPublicaGLAM() {
 
-
     console.log("GLAM: iniciando carga de galería");
 
-const contenedor = document.getElementById("galeriaPublicaGLAM");
-console.log("GLAM: contenedor encontrado:", !!contenedor);
-console.log("GLAM: token:", new URLSearchParams(window.location.search).get("token"));
+    const contenedor = document.getElementById("galeriaPublicaGLAM");
+
     const token = new URLSearchParams(
         window.location.search
     ).get("token");
 
     const endpoint = DATOS_BODA.rsvpEndpoint;
 
-    const contenedor = document.getElementById("galeriaPublicaGLAM");
+    console.log("GLAM: contenedor encontrado:", !!contenedor);
+    console.log("GLAM: token:", token);
+    console.log("GLAM: endpoint:", endpoint);
 
-    if (!token || !endpoint || !contenedor) return;
+    if (!token || !endpoint || !contenedor) {
+        console.error("GLAM: faltan datos para cargar la galería");
+        return;
+    }
 
     contenedor.innerHTML = "<p>Cargando recuerdos...</p>";
 
@@ -871,6 +872,8 @@ console.log("GLAM: token:", new URLSearchParams(window.location.search).get("tok
     window[callback] = function(respuesta) {
 
         delete window[callback];
+
+        console.log("GLAM: respuesta recibida:", respuesta);
 
         if (!respuesta || !respuesta.correcto) {
 
@@ -930,6 +933,8 @@ console.log("GLAM: token:", new URLSearchParams(window.location.search).get("tok
         "&callback=" + callback;
 
     script.onerror = function() {
+
+        console.error("GLAM: error al consultar la galería");
 
         contenedor.innerHTML =
             "<p>No se pudo conectar con el álbum.</p>";
