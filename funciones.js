@@ -1081,3 +1081,83 @@ function reducirFotoGLAM(archivo) {
     });
 
 }
+
+
+function cargarGaleriaPublicaGLAM() {
+
+    const token = new URLSearchParams(
+        window.location.search
+    ).get("token");
+
+    const endpoint = DATOS_BODA.rsvpEndpoint;
+
+    const contenedor = document.getElementById(
+        "galeriaPublicaGLAM"
+    );
+
+    if (!token || !endpoint || !contenedor) return;
+
+    const callback = "galamGaleriaCallback";
+
+    window[callback] = function(respuesta) {
+
+        delete window[callback];
+
+        if (!respuesta || !respuesta.correcto) {
+            contenedor.innerHTML =
+                "<p>No se pudieron cargar los recuerdos.</p>";
+            return;
+        }
+
+        if (!respuesta.fotografias.length) {
+            contenedor.innerHTML =
+                "<p>Pronto aparecerán aquí los recuerdos compartidos.</p>";
+            return;
+        }
+
+        contenedor.innerHTML = "";
+
+        respuesta.fotografias.forEach(foto => {
+
+            const imagen = document.createElement("img");
+
+            imagen.src =
+                "data:" + foto.tipoMime + ";base64," + foto.base64;
+
+            imagen.alt = foto.nombre || "Recuerdo compartido";
+            imagen.className = "foto-publica-glam";
+
+            imagen.addEventListener("click", function() {
+
+                const visor = document.getElementById("visorFotos");
+                const ampliada = document.getElementById("imagenAmpliada");
+
+                ampliada.src = imagen.src;
+                visor.classList.add("activo");
+
+            });
+
+            contenedor.appendChild(imagen);
+
+        });
+
+    };
+
+    const script = document.createElement("script");
+
+    script.src =
+        endpoint +
+        "?galeria=1" +
+        "&token=" + encodeURIComponent(token) +
+        "&callback=" + callback;
+
+    script.onerror = function() {
+        contenedor.innerHTML =
+            "<p>No se pudo conectar con el álbum.</p>";
+        delete window[callback];
+    };
+
+    document.body.appendChild(script);
+
+}
+
