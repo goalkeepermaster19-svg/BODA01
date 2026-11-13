@@ -848,6 +848,12 @@ function reducirFotoGLAM(archivo) {
 
 function cargarGaleriaPublicaGLAM() {
 
+
+    console.log("GLAM: iniciando carga de galería");
+
+const contenedor = document.getElementById("galeriaPublicaGLAM");
+console.log("GLAM: contenedor encontrado:", !!contenedor);
+console.log("GLAM: token:", new URLSearchParams(window.location.search).get("token"));
     const token = new URLSearchParams(
         window.location.search
     ).get("token");
