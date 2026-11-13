@@ -1634,4 +1634,50 @@ main > section:not(.portada)::after {
     }
 }
 
+/* GLAM - CORRECCIÓN DIRECTA DE GALERÍA */
+
+#galeriaPublicaGLAM {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 15px !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 220px !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    padding: 12px 8px !important;
+    box-sizing: border-box !important;
+
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+#galeriaPublicaGLAM .foto-publica-glam {
+    flex: 0 0 165px !important;
+    width: 165px !important;
+    min-width: 165px !important;
+    height: 185px !important;
+
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    scroll-snap-align: start;
+}
+
+@media (max-width: 600px) {
+    #galeriaPublicaGLAM {
+        height: 185px !important;
+        gap: 12px !important;
+    }
+
+    #galeriaPublicaGLAM .foto-publica-glam {
+        flex-basis: 135px !important;
+        min-width: 135px !important;
+        width: 135px !important;
+        height: 150px !important;
+    }
+}
+
 
