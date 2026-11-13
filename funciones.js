@@ -926,7 +926,7 @@ function cargarGaleriaPublicaGLAM() {
 
         contenedor.innerHTML = "";
 
-        fotografias.forEach(foto => {
+        fotografias.forEach((foto, indice) => {
 
             const imagen = document.createElement("img");
 
@@ -938,11 +938,7 @@ function cargarGaleriaPublicaGLAM() {
 
             imagen.addEventListener("click", () => {
 
-                const visor = document.getElementById("visorFotos");
-                const ampliada = document.getElementById("imagenAmpliada");
-
-                ampliada.src = imagen.src;
-                visor.classList.add("visible");
+                abrirVisorVintageGLAM(fotografias, indice);
 
             });
 
@@ -975,5 +971,157 @@ function cargarGaleriaPublicaGLAM() {
     };
 
     document.body.appendChild(script);
+
+}
+
+
+/* ==========================================
+   GLAM - VISOR VINTAGE CON NAVEGACIÓN
+========================================== */
+
+let fotografiasVisorGLAM = [];
+let indiceVisorGLAM = 0;
+
+function abrirVisorVintageGLAM(fotografias, indice) {
+
+    fotografiasVisorGLAM = fotografias;
+    indiceVisorGLAM = indice;
+
+    const visor = document.getElementById("visorFotos");
+    const ampliada = document.getElementById("imagenAmpliada");
+
+    if (!visor || !ampliada) return;
+
+    let navegacion = visor.querySelector(".navegacion-vintage");
+
+    if (!navegacion) {
+
+        navegacion = document.createElement("div");
+        navegacion.className = "navegacion-vintage";
+
+        navegacion.innerHTML = `
+            <button type="button" class="anterior-vintage"
+                aria-label="Fotografía anterior">‹</button>
+
+            <button type="button" class="siguiente-vintage"
+                aria-label="Fotografía siguiente">›</button>
+        `;
+
+        visor.appendChild(navegacion);
+
+        navegacion.querySelector(".anterior-vintage")
+            .addEventListener("click", (evento) => {
+                evento.stopPropagation();
+                cambiarFotoVintageGLAM(-1);
+            });
+
+        navegacion.querySelector(".siguiente-vintage")
+            .addEventListener("click", (evento) => {
+                evento.stopPropagation();
+                cambiarFotoVintageGLAM(1);
+            });
+
+    }
+
+    let contador = visor.querySelector(".contador-vintage");
+
+    if (!contador) {
+
+        contador = document.createElement("div");
+        contador.className = "contador-vintage";
+
+        visor.appendChild(contador);
+
+    }
+
+    // Gestos de desplazamiento para celulares
+
+    if (!ampliada.dataset.gestosVintage) {
+
+        let inicioX = 0;
+        let inicioY = 0;
+
+        ampliada.addEventListener("touchstart", (evento) => {
+
+            inicioX = evento.changedTouches[0].screenX;
+            inicioY = evento.changedTouches[0].screenY;
+
+        }, { passive: true });
+
+        ampliada.addEventListener("touchend", (evento) => {
+
+            const finalX = evento.changedTouches[0].screenX;
+            const finalY = evento.changedTouches[0].screenY;
+
+            const diferenciaX = finalX - inicioX;
+            const diferenciaY = finalY - inicioY;
+
+            if (
+                Math.abs(diferenciaX) > 50 &&
+                Math.abs(diferenciaX) > Math.abs(diferenciaY)
+            ) {
+
+                cambiarFotoVintageGLAM(diferenciaX < 0 ? 1 : -1);
+
+            }
+
+        }, { passive: true });
+
+        ampliada.dataset.gestosVintage = "1";
+
+    }
+
+    mostrarFotoVintageGLAM();
+
+    visor.classList.add("visible");
+
+}
+
+
+function mostrarFotoVintageGLAM() {
+
+    const ampliada = document.getElementById("imagenAmpliada");
+    const visor = document.getElementById("visorFotos");
+
+    if (!ampliada || !visor || !fotografiasVisorGLAM.length) return;
+
+    const foto = fotografiasVisorGLAM[indiceVisorGLAM];
+
+    ampliada.src =
+        "data:" + foto.tipoMime + ";base64," + foto.base64;
+
+    ampliada.alt = foto.nombre || "Recuerdo compartido";
+
+    const contador = visor.querySelector(".contador-vintage");
+
+    if (contador) {
+
+        contador.textContent =
+            (indiceVisorGLAM + 1) +
+            " / " +
+            fotografiasVisorGLAM.length;
+
+    }
+
+}
+
+
+function cambiarFotoVintageGLAM(direccion) {
+
+    if (!fotografiasVisorGLAM.length) return;
+
+    indiceVisorGLAM += direccion;
+
+    // Navegación circular
+
+    if (indiceVisorGLAM < 0) {
+        indiceVisorGLAM = fotografiasVisorGLAM.length - 1;
+    }
+
+    if (indiceVisorGLAM >= fotografiasVisorGLAM.length) {
+        indiceVisorGLAM = 0;
+    }
+
+    mostrarFotoVintageGLAM();
 
 }
